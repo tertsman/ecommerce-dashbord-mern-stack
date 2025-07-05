@@ -1,0 +1,93 @@
+<div className="col-md-5 mb-2">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="organizationContainer card shadow border-0 p-3">
+                  <h2>organization</h2>
+                  <form action="">
+                    <div className="label-control">
+                      <label htmlFor="">add category</label>
+                      <div className="input-control">
+                        <input type="text" placeholder="type here..." />
+                        <button>add</button>
+                      </div>
+                    </div>
+                    <div className="label-control">
+                      <label htmlFor="">add brand</label>
+                      <div className="input-control">
+                        <input type="text" placeholder="type here..." />
+                        <button>add</button>
+                      </div>
+                    </div>
+                    <div className="label-control">
+                      <label htmlFor="">add color</label>
+                      <div className="input-control">
+                        <input type="text" placeholder="type here..." />
+                        <button>add</button>
+                      </div>
+                    </div>
+                    <div className="label-control">
+                      <label htmlFor="">add size</label>
+                      <div className="input-control">
+                        <input type="text" placeholder="type here..." />
+                        <button>add</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="specification card shadow border-0 p-3 mt-2">
+                  <h2>specification</h2>
+                  <form action="">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="label-control">
+                          <label htmlFor="size">size</label>
+                          <select name="size" id="size">
+                            <option value="sm">sm</option>
+                            <option value="md">md</option>
+                            <option value="lg">lg</option>
+                            <option value="xl">xl</option>
+                            <option value="xxl">xxl</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="label-control">
+                          <label htmlFor="size">colors</label>
+                          <select name="size" id="size">
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                            <option value="popular">Popular</option>
+                            <option value="green">Green</option>
+                            <option value="pink">Pink</option>
+                            <option value="black">Black</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="label-control">
+                          <label htmlFor="stock">Stock</label>
+                          <input
+                            name="stock"
+                            type="text"
+                            placeholder="type here..."
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="label-control">
+                          <label htmlFor="weight">weight</label>
+                          <input
+                            name="weight"
+                            type="text"
+                            placeholder="type here..."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>

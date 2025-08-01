@@ -156,44 +156,7 @@ const UploadProduct = () => {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData();
-
-  //   // Append all form fields
-  //   for (let key in form) {
-  //     formData.append(key, form[key]);
-  //   }
-
-  //   // Append images
-  //   newImages.forEach((img) => {
-  //     formData.append("images", img.file);
-  //   });
-
-  //   try {
-  //     setIsLoading(true);
-  //     const res = await postData("/product/create", formData);
-  //     const data = await res.json();
-  //     if (res.ok) {
-  //       setMessage({
-  //         open: true,
-  //         type: "success",
-  //         text: data.message || "Created successfully",
-  //       });
-
-  //       clearForm();
-  //     } else {
-  //       alert("Create failed");
-  //       console.error(data);
-  //     }
-  //   } catch (err) {
-  //     console.error("Submit Error:", err);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // Confirm delete
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -220,7 +183,7 @@ const UploadProduct = () => {
 
       // Append new images (File objects)
       newImages.forEach((img) => formData.append("images", img.raw));
-      // ប្រសិនបើ newImages មាន property file: => img.file
+     
 
       selectedColors.forEach(color => formData.append("colors", color));
     selectedWeights.forEach(weight => formData.append("weights", weight));

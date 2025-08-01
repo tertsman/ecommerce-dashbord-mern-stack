@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import  { useContext, useEffect, useState } from "react";
 import DashbaordBox from "./DashbaordBox";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
@@ -50,6 +50,7 @@ import { CiEdit } from "react-icons/ci";
 
 
 import CircularProgress from "@mui/material/CircularProgress";
+import { MyContext } from "../../App";
 
 
 
@@ -175,9 +176,10 @@ const columns = [
     ),
   },
 ];
-
+const context = useContext(MyContext)
   useEffect(()=>{
     getProduct();
+    context.setIsHiddenSidebarAndHeader(false);
     
   },[])
 

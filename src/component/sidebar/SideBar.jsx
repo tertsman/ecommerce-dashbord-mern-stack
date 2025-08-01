@@ -8,19 +8,31 @@ import { BiSolidCategory } from "react-icons/bi";
 import { MdMessage } from "react-icons/md";
 import { MdNotificationAdd } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { MyContext } from '../../App';
+import { useEffect } from 'react';
 
 
 const SideBar = () => {
 
     const [activeTab,setActiveTab] = useState(0);
     const [isToggleSubmenu,setIsToggleSubmenu] = useState(false)
-
+    const [isLogin,setIsLogin] = useState(false)
+    const navigate = useNavigate()
     const isOpenSubmenu = (index)=>{
         setActiveTab(index)
         setIsToggleSubmenu(!isToggleSubmenu);
     }
+
+    useEffect(()=>{
+      const token = localStorage.getItem("token");
+
+   if(token !== null && token !==""){
+    setIsLogin(true)
+   }else{
+    navigate('/login')
+   }  
+    },[])
 
 
   return (
@@ -50,9 +62,7 @@ const SideBar = () => {
                         <li><Link to="/productList">
                          Product List
                         </Link></li>
-                        <li><Link to="/ProductView">
-                         Product View
-                        </Link></li>
+                        
                         <li><Link to="/uploadProduct">
                          Product Upload
                         </Link></li>
@@ -82,27 +92,70 @@ const SideBar = () => {
                     </ul>
                  </div>
                 </li>
+                <Link to='/order'>
                 <li>
                     <Button className={`w-100 ${activeTab ===3 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(3)}>
                         <span className="icon"><IoMdCart/></span>
                         Orders
-                        <span className="arrow"><IoIosArrowForward/></span>
+                        
                     </Button>
                 </li>
+                </Link>
                 <li>
-                    <Button className={`w-100 ${activeTab ===4 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(4)}>
+                    <Button className={`w-100 ${activeTab === 4 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(4)}>
                         <span className="icon"><MdMessage/></span>
-                        messages
+                        Home Banner
                         <span className="arrow"><IoIosArrowForward/></span>
                     </Button>
+                     <div className={`submenuWrapper ${activeTab === 4 && isToggleSubmenu === true ? 'colapse' : 'colapsed'}`}>
+                    <ul className="submenu">
+                        <li><Link to="/homeBannerList">
+                         Home Banner List
+                        </Link></li>
+                        <li><Link to="/homeBanner">
+                         Add Home Banner
+                        </Link></li>
+            
+                    </ul>
+                 </div>
                 </li>
                 <li>
-                    <Button className={`w-100 ${activeTab ===5 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(5)}>
-                        <span className="icon"><MdNotificationAdd/></span>
-                        notifications
+                    <Button className={`w-100 ${activeTab === 5 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(5)}>
+                        <span className="icon"><MdMessage/></span>
+                        slide Banner
                         <span className="arrow"><IoIosArrowForward/></span>
                     </Button>
+                     <div className={`submenuWrapper ${activeTab === 5 && isToggleSubmenu === true ? 'colapse' : 'colapsed'}`}>
+                    <ul className="submenu">
+                        <li><Link to="/slideBannerList">
+                         slide Banner List
+                        </Link></li>
+                        <li><Link to="/slideBanner">
+                         Add slide Banner
+                        </Link></li>
+            
+                    </ul>
+                 </div>
                 </li>
+                <li>
+                    <Button className={`w-100 ${activeTab === 6 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(6)}>
+                        <span className="icon"><MdMessage/></span>
+                        slide Banner
+                        <span className="arrow"><IoIosArrowForward/></span>
+                    </Button>
+                     <div className={`submenuWrapper ${activeTab === 6 && isToggleSubmenu === true ? 'colapse' : 'colapsed'}`}>
+                    <ul className="submenu">
+                        <li><Link to="/bannerButtomList">
+                         Banner Bottom List
+                        </Link></li>
+                        <li><Link to="/bannerBottom">
+                         Banner Bottom Upload
+                        </Link></li>
+            
+                    </ul>
+                 </div>
+                </li>
+                
                 <li>
                     
                     <Button className={`w-100 ${activeTab ===6 ? 'active' : '' }`} onClick={()=>isOpenSubmenu(6)}>

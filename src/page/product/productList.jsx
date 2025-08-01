@@ -22,6 +22,7 @@ import { Snackbar, Alert } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Stack, Chip } from '@mui/material';
+import { Rating } from "@mui/material";
 
 const ProductList = () => {
 
@@ -57,7 +58,10 @@ const columns = [
   { field: "oldPrice", headerName: "Old Price ($)", width: 100 },
   { field: "price", headerName: "Price ($)", width: 100 },
   { field: "stock", headerName: "Stock", width: 100 },
-  { field: "rating", headerName: "Rating", width: 100 },
+  { field: "rating", headerName: "Rating", width: 100,
+  renderCell:(params)=> <Rating name="read-only" value={Number(params.value)} readOnly size="small" />
+  
+   },
 {
   field: 'colors',
   headerName: 'Colors',
@@ -162,6 +166,7 @@ const columns = [
         setIsLoading(true)
         const res = await deleteData(`/product/${deleteId}`);
         setRows((prev) => prev.filter((row) => row.id !== deleteId));
+      
          setMessage({
           open: true,
           type: "success",
@@ -169,6 +174,8 @@ const columns = [
         });
         setIsLoading(false)
       } catch (error) {
+
+         
         setMessage({
           open: true,
           type: "error",
@@ -320,7 +327,11 @@ const columns = [
       console.error("Fetch error:", error);
     }
   }
-  console.log("🟢 rows data", rows)
+
+
+ 
+  
+  
   const handleEdit =(row)=> {
     navigate(`/EditProduct/${row.id}`);
   }
@@ -358,7 +369,7 @@ const handleClose = () => {
                 <div className="breadRight">
                     <span><Link to="/">Home</Link>~</span>
                     <span ><Link to="/">Product</Link>~</span>
-                     <span className=" text-secondary card shadow p-2 btn-add rounded-5" onClick={add}>Add Category</span>
+                     <span className=" text-secondary card shadow p-2 btn-add rounded-5" onClick={add}>Add Product</span>
                 </div>
             </div>
         </div>

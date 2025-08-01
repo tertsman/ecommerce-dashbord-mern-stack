@@ -3,7 +3,7 @@ import logo from "../../assets/image/ecommerce.png";
 import Button from "@mui/material/Button";
 import { MdOutlineMenuOpen } from "react-icons/md";
 import { IoMdMenu } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBox from "../searchbox/SearchBox";
 import { CiLight } from "react-icons/ci";
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -19,8 +19,13 @@ import { MyContext } from "../../App";
 
 const Header = () => {
  
-
+ const navigate = useNavigate()
   const context = useContext(MyContext)
+
+  const  logout = ()=>{
+    localStorage.clear();
+    navigate('/login')
+  }
 
  
   return (
@@ -31,7 +36,7 @@ const Header = () => {
             <div className=" col-sm-2 part1 ">
               <Link to={"/"} className=" d-flex align-items-center logo ">
                 <img src={logo} />
-                <span>Ecommerce</span>
+                <h5><span>E</span>shop</h5>
               </Link>
             </div>
             <div className=" col-sm-3 part2 d-flex align-items-center ">
@@ -164,19 +169,21 @@ const Header = () => {
                 </div>
               </div>
 
-              <div>
+              {
+                context.isLogin !== true ?<Link to="/login"> <Button className="btn-signin">Sing In</Button></Link> :<div>
                 <div className="myAcc position-relative">
                   <div className="userImg">
-                    <span className="rounded-circle">
-                      <img
+                    <span className="rounded-circle text-uppercase fw-bold fs-5  ">
+                      {context.user?.name.charAt(0)}
+                      {/* <img
                         src="https://th.bing.com/th/id/OIF.VKuX05buHNsZrkEe8LGulw?rs=1&pid=ImgDetMain"
                         alt=""
-                      />
+                      /> */}
                     </span>
                   </div>
                   <div className="userInfo">
-                    <h3>tert codding</h3>
-                    <p>@tertcodding</p>
+                    <h3>{context.user?.name}</h3>
+                    <p>{context.user?.email}</p>
                   </div>
                   <div className="droupdownpf">
                     <ul className="dropItem">
@@ -196,12 +203,15 @@ const Header = () => {
                         <span className="dropIcon">
                           <RiLogoutCircleRLine />
                         </span>
-                        <span className="dropTitle">Logout</span>
+                        <span className="dropTitle" onClick={logout}>Logout</span>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
+              }
+                
+              
             </div>
           </div>
         </div>

@@ -13,11 +13,16 @@ import { GrStar } from "react-icons/gr";
 import { IoMdStarHalf } from "react-icons/io";
 import { MdReply } from "react-icons/md";
 import { getData } from "../../util/api";
+
+import { Rating } from "@mui/material";
+
+import dayjs from "dayjs";
 const ProductView = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reviews,setReview]=useState([])
   useEffect(() => {
     if (id) {
       setLoading(true);
@@ -31,8 +36,19 @@ const ProductView = () => {
           setLoading(false);
         });
     }
+
+    getReview()
   }, [id]);
-  console.log("product", product);
+
+ const getReview = async()=>{
+    
+      const res = await getData(`/review?productId=${id}`);
+      setReview(res)
+   
+      
+  }
+
+  console.log("product Review",reviews)
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -158,7 +174,7 @@ const ProductView = () => {
                     <MdHotelClass />
                     <h5>review</h5>
                     <span>:</span>
-                    <p>({product.numReviews}) review </p>
+                    <p>({reviews?.length}) review </p>
                   </div>
                   <div className="product-view-meta">
                     <MdVerified />
@@ -239,7 +255,48 @@ const ProductView = () => {
               <div className="reviewContainer p-3">
                 <h3>customer review</h3>
                 <ul className="review-list mt-3">
-                  <li className="review-item">
+                  {reviews?.length !== 0 && reviews?.map((item,index)=>{
+                    return(
+                        <li className="review-item mb-2" key={index}>
+                    <div className="review-group">
+                      <div className="review-data card shadow p-3">
+                        <div className="review-head">
+                          <div className="review-user">
+                            <div className="user-avatar">
+                              <img
+                                src="https://th.bing.com/th/id/OIP.c971SFkTAdWQvF65WSJTLgHaEY?r=0&rs=1&pid=ImgDetMain"
+                                alt="user-review"
+                              />
+                            </div>
+                            <div className="duel-text">
+                              <h3 className="mc-duel-text-title">
+                                {item.customerName}
+                              </h3>
+                              <p className="mc-duel-text-descrip">
+                                {dayjs(item.dateCreated).format('DD-MMM-YYYY')}
+                              </p>
+                            </div>
+                          </div>
+                          {/* <div className="review-reply">
+                            <button className="reply-btn shadow-sm border-0">
+                              <MdReply />
+                              <span>reply</span>
+                            </button>
+                          </div> */}
+                        </div>
+                        <div className="review-star">
+                          <Rating name="read-only" value={Number(item.customerRating)} readOnly size="small" />
+                        </div>
+                        <p className="review-describe">
+                          {item.review}
+                        </p>
+                      </div>
+                    </div>
+                    
+                  </li>
+                    )
+                  })}
+                  {/* <li className="review-item">
                     <div className="review-group">
                       <div className="review-data card shadow p-3">
                         <div className="review-head">
@@ -505,11 +562,11 @@ const ProductView = () => {
                         </p>
                       </div>
                     </div>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
-            <div className="col-md-12">
+            {/* <div className="col-md-12">
               <div className="review-reply-form mt-3 p-3">
                 <h3 className="mb-2">Review reply form</h3>
                 <div className="label-field-group">
@@ -519,7 +576,7 @@ const ProductView = () => {
                   drop your reply
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

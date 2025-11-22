@@ -10,8 +10,13 @@ const API = axios.create({
 //   },
 });
 API.interceptors.request.use(config => {
-  if (config.url === '/api/user/signup') {
-    return config; // មិនបន្ថែម Authorization header នៅ signup
+  const publicPaths = [
+    "/api/user/signup",
+    "/user/authWithGoogle",
+    "/api/user/authWithGoogle", // optional
+  ];
+  if (publicPaths.includes(config.url)) {
+    return config; 
   }
   const token = localStorage.getItem("token");
   if (token) {
@@ -78,6 +83,20 @@ export const deleteData = async (url) => {
     return data;
   } catch (error) {
     console.error("DELETE error:", error);
+    throw error;
+  }
+};
+
+export const APIpostData = async (url, formData) => {
+  try {
+    const { data } = await API.post(url, formData,{
+        headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("POST error:", error);
     throw error;
   }
 };

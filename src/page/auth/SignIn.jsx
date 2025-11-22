@@ -10,7 +10,14 @@ import { Button } from '@mui/material';
 import { Snackbar, Alert } from "@mui/material";
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
-import { postData } from '../../util/api';
+import { postData,APIpostData } from '../../util/api';
+
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+import { firebaseApp } from "../../firebase";
+const auth = getAuth(firebaseApp);
+const googleProvider = new GoogleAuthProvider()
 const SignIn = () => {
    const context = useContext(MyContext)
    const [inputIndex,setInputIndex]= useState(null)
@@ -77,7 +84,7 @@ const SignIn = async (e) => {
     const user={
       name:res.user?.name,
       email:res.user?.email,
-      userId:res.user?._id
+      _id:res.user?._id
     }
     localStorage.setItem("user",JSON.stringify(user))
 
@@ -99,7 +106,34 @@ const SignIn = async (e) => {
     }
   };
 
-
+// sing with google 
+        const signInWithGoogle =  () => {
+          signInWithPopup(auth,googleProvider)
+          .then((result) =>{
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken; 
+            const user = result.user;
+            const fields = {
+              name:user.providerData[0].displayName,
+              email:user.providerData[0].email,
+              password:null,
+              phone:user.providerData[0].phoneNumber,
+              isAdmin:false
+            }
+            APIpostData("user/authWithGoogle",fields).then((res)=>{
+              setMessage({
+              open: true,
+              type: "success",
+              text: res.msg || "user Authenticated!"
+            });
+            localStorage.setItem("token", res.token);  // <=== ផ្ទុក JWT token មកពី backend
+            localStorage.setItem("user", JSON.stringify(res.user)); 
+            // navigate("/");
+            window.location.href = "/";
+            })
+   
+          })
+        }
 
 
   return (
@@ -169,7 +203,7 @@ const SignIn = async (e) => {
 
 
                     <div className="signinWhitGoogle">
-                      <Button variant='outlined' className='w-100'>
+                      <Button variant='outlined' className='w-100' onClick={signInWithGoogle}> 
                         <FaGoogle/> &nbsp;  continue whit google
                       </Button>
                     </div>

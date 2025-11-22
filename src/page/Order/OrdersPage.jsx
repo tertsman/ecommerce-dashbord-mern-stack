@@ -11,7 +11,7 @@ const OrdersPage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [singleOrder, setSingleOrder] = useState();
   const getOrder = async () => {
-    const res = await getData(`/order/`); // <-- your backend route
+    const res = await getData(`/order`); // <-- your backend route
     setOrderDate(res);
   };
 
@@ -22,19 +22,47 @@ const OrdersPage = () => {
   const ViewProduct = async (id) => {
     const res = await getData(`/order/${id}`);
     setProduct(res);
-
     setIsOpenModal(true);
   };
 
-  const orderStatus = async (status, id) => {
-    const res = await getData(`/order/${id}`);
+  // const orderStatus = async (status, id) => {
 
+  //   alert(id)
+    
+  //   const res = await getData(`/order/${id}`);
+
+  //   setSingleOrder(res);
+  //   const address = res.address[0];
+  //   const order = {
+  //     tran_id: res.tran_id,
+  //     amount: res.amount,
+  //     _id: res._id,
+  //     address: {
+  //       name: address.name,
+  //       phone: address.phone,
+  //       email: address.email,
+  //       street: address.street,
+  //       city: address.city,
+  //       country: address.country,
+  //       zip: address.zip,
+  //     },
+  //     cartItems: res.cartItems,
+  //     paymentStatus: status,
+  //   };
+  //   const response = await APIputData(`/order/${id}`, order);
+  //   console.log(response);
+  //   getOrder();
+  // };
+
+  const orderStatus = async (status, id) => {
+  try {
+    const res = await getData(`/order/${id}`);
     setSingleOrder(res);
     const address = res.address[0];
     const order = {
       tran_id: res.tran_id,
       amount: res.amount,
-      userId: res.userId,
+      _id: res._id,
       address: {
         name: address.name,
         phone: address.phone,
@@ -50,7 +78,11 @@ const OrdersPage = () => {
     const response = await APIputData(`/order/${id}`, order);
     console.log(response);
     getOrder();
-  };
+  } catch (err) {
+    console.error("Order not found or API error:", err);
+    // Optionally show error to user
+  }
+};
   return (
     <>
       <div className="container">

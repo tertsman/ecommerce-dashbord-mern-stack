@@ -32,7 +32,7 @@ function App() {
 const [user,setUser]= useState({
   name:"",
   email:"",
-  userId:""
+  _id:""
 })
  const [isHiddenSidebarAndHeader,setIsHiddenSidebarAndHeader] = useState(false)
   const values = {
